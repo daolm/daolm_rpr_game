@@ -49,21 +49,26 @@ public class TargetMob : MonoBehaviour {
 	
 	// Select target to attack
 	private void TargetEnemy() {
-		if(selectedTarget == null) {
-			SortTargetsByDistance();
-			selectedTarget = targets[0];	
-		}else {
-			int index = targets.IndexOf(selectedTarget);
-			
-			if(index < targets.Count -1) {
-				index++;
+		if(targets.Count == 0)
+			AddAllEnemies();
+		
+		if(targets.Count > 0) {
+			if(selectedTarget == null) {
+				SortTargetsByDistance();
+				selectedTarget = targets[0];	
 			}else {
-				index = 0;
+				int index = targets.IndexOf(selectedTarget);
+			
+				if(index < targets.Count -1) {
+					index++;
+				}else {
+					index = 0;
+				}
+				DeSelectTarget();
+				selectedTarget = targets[index];
 			}
-			DeSelectTarget();
-			selectedTarget = targets[index];
+			SelectTarget();	
 		}
-		SelectTarget();
 	}
 	
 	// Change color of selected target
